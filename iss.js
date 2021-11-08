@@ -21,15 +21,17 @@ const fetchMyIP = function(callback) {
   });
 };
 
-const fetchCoordsByIP = function (ip, callback) {
+const fetchCoordsByIP = function(ip, callback) {
   // api request to retrieve latitude and longitude for a given IP address
-  request('https://freegeoip.app/json/162.245.144.188', (error, response, body) => {
+  request('https://freegeoip.app/json/162.245.144.100', (error, response, body) => {
+    // if wrong IP used --> error 404 not found
     if (error) {
       callback(error, null);
       return;
     }
+    // for !== 200 codes --> send error via callback
     if (response.statusCode !== 200) {
-      callback(Error(`Status Code ${response.statusCode} when fetching Coordinates for IP: ${body}`), null); 
+      callback(Error(`Status Code ${response.statusCode} when fetching Coordinates for IP: ${body}`), null);
       // creates new Error object which is passed to calback to indicate error
       return;
     }
@@ -41,6 +43,8 @@ const fetchCoordsByIP = function (ip, callback) {
   });
 
 };
+
+
 
 
 module.exports = { fetchMyIP, fetchCoordsByIP };
